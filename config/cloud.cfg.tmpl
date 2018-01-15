@@ -113,7 +113,6 @@ cloud_final_modules:
  - chef
  - salt-minion
  - mcollective
- - dhcpagent
 {% endif %}
  - rightscale_userdata
  - scripts-vendor
@@ -126,7 +125,8 @@ cloud_final_modules:
  - phone-home
  - final-message
  - power-state-change
-
+ - dhcpagent
+ 
 # System and/or distro specific settings
 # (not accessible to handlers/transforms)
 system_info:
