@@ -1,3 +1,7 @@
+# Author: Tamilmani Manoharan <tamanoha@microsoft.com>
+#
+# This file is part of cloud-init. See LICENSE file for license information.
+ 
 import sys
 import logging
 import socket
@@ -14,11 +18,11 @@ RTM_DELLINK = 17
 IFLA_IFNAME = 3
 
 def GetLogger():
-    log = logging.getLogger("dhcpagent")
+    log = logging.getLogger("azuredhcpagent")
     log.setLevel(logging.DEBUG)
     formatter = logging.Formatter('%(asctime)s - %(name)s - %(levelname)s - %(filename)s:%(lineno)s - %(message)s')
     
-    handler = RotatingFileHandler("/var/log/dhcpagent.log", maxBytes=10485760,
+    handler = RotatingFileHandler("/var/log/azuredhcpagent.log", maxBytes=10485760,
                                   backupCount=5)
 
     handler.setFormatter(formatter)
@@ -69,14 +73,14 @@ def main():
             data = data[increment:]
             remaining -= increment
 
-            # Hoorah, a link is up!
+            # The link is up!
             if rta_type == IFLA_IFNAME:
                 log.debug("New link %s", rta_data)
                 ifname = str(rta_data).strip('\0')
 
-                operfilename = "/sys/class/net/" + ifname +"/operstate"
+                operfilename = "/sys/class/net/" + ifname + "/operstate"
                 operfilename = operfilename.strip("\0")
-                carrierfilename = "/sys/class/net/" + ifname +"/carrier"
+                carrierfilename = "/sys/class/net/" + ifname + "/carrier"
                 carrierfilename = carrierfilename.strip("\0")
 
                 log.debug("operfilename %s", operfilename)
@@ -112,6 +116,7 @@ def main():
                     
                 if operstate == "up" or carrier == "1":
                     log.debug("trigger dhcp")
+                    # assuming dhclient exists
                     return_code = subprocess.call("dhclient " + ifname, shell=True)
                     log.debug("dhclient return status %d", return_code)
 
