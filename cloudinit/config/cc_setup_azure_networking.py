@@ -15,7 +15,7 @@ network to another.
 
 **Internal name:** ``cc_setup_azure_networking``
 
-**Module frequency:** per instance
+**Module frequency:** per always
 
 **Supported distros:** all
 """
