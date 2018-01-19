@@ -72,7 +72,6 @@ cloud_config_modules:
  - emit_upstart
  - snap_config
 {% endif %}
- - setup-azure-networking
  - ssh-import-id
  - locale
  - set-passwords
@@ -126,6 +125,7 @@ cloud_final_modules:
  - phone-home
  - final-message
  - power-state-change
+ - setup-azure-networking
  
 # System and/or distro specific settings
 # (not accessible to handlers/transforms)
